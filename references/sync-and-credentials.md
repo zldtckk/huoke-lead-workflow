@@ -9,11 +9,11 @@ Copy `assets/.env.example` to a local `.env` beside the snapshot and fill the de
 
 The sync token is independent of SSH credentials and web Basic Auth. A successful website page load or a successful read-only `GET /api/prospect-accounts` does not prove write access.
 
-## Current Tencent setup
+## Server connection
 
-For the Huoke workbench, the Tencent host and current account are in the user’s desktop `服务器.txt`; read it locally without printing credentials. SSH port 22 was reachable and password authentication for `ubuntu` succeeded. The available local public keys were rejected, so a public-key-only attempt can fail even while password login works. The sync token is stored server-side in `/etc/xhs-workbench.env`; retrieve only `WORKBENCH_SYNC_TOKEN` over an authenticated SSH session, without echoing the file into logs.
+Use the owner-provided credential source for the target server. Keep the host, username, password, private key, and token out of the skill, Git history, command output, and AI prompt. Verify the host key. A reachable SSH port only proves network reachability; rejected public-key authentication does not prove that password authentication or the server itself is unavailable. Use the authorized method and account instead of guessing credentials.
 
-The Huoke project keeps the local token in `deploy/tencent/.env`, which is gitignored. For another server, use its own authorized host, account, token path, and destination; do not reuse this project’s credentials.
+After SSH authentication, retrieve only the `WORKBENCH_SYNC_TOKEN` value from the server’s configured environment file. Do not echo the full environment file to terminal output or logs. Store the value in the local gitignored `.env`. For another server, use its own authorized host, account, token path, and destination; do not reuse this project’s credentials.
 
 ## Push and verify
 
